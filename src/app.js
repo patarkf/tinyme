@@ -59,7 +59,7 @@ class Application {
     Logger.info('Created optimized dir');
 
     const results = await Application.readDirRecursively(optimizedDir);
-    const totalOfMinifiedFiles = results.filter(isFile => isFile).length;
+    const totalOfMinifiedFiles = results.filter(isFile => !!isFile).length;
 
     Logger.info(`${totalOfMinifiedFiles} file(s) minified!`);
   }
