@@ -58,7 +58,7 @@ class Application {
     const optimizedDir = await FileSystem.cloneDir(dir);
     Logger.info('Created optimized dir');
 
-    const results = await Application.minifyFiles(optimizedDir);
+    const results = await Application.readDirRecursively(optimizedDir);
     const totalOfMinifiedFiles = results.filter(isFile => isFile).length;
 
     Logger.info(`${totalOfMinifiedFiles} file(s) minified!`);
@@ -73,7 +73,7 @@ class Application {
    *
    * @memberof Application
    */
-  static async minifyFiles(optimizedDir) {
+  static async readDirRecursively(optimizedDir) {
     try {
       const contents = await readdirAsync(optimizedDir);
 
@@ -105,7 +105,7 @@ class Application {
       return Application.minifyFile(currentPath);
     }
 
-    return Application.minifyFiles(currentPath);
+    return Application.readDirRecursively(currentPath);
   }
 
   /**
