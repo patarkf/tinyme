@@ -12,7 +12,7 @@ const tinify = require('tinify');
 const path = require('path');
 const util = require('util');
 const readdirAsync = util.promisify(require('fs').readdir);
-const lstatSync = util.promisify(require('fs').lstat);
+const lstatAsync = util.promisify(require('fs').lstat);
 
 /**
  * Application class
@@ -99,7 +99,7 @@ class Application {
   static async addToQueue(optimizedDir, content) {
     const currentPath = `${optimizedDir}/${content}`;
 
-    const pathStats = await lstatSync(currentPath);
+    const pathStats = await lstatAsync(currentPath);
 
     if (pathStats.isFile()) {
       return Application.minifyFile(currentPath);
