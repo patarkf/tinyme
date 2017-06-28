@@ -23,7 +23,7 @@ The first thing you have to do is renaming your `variable.env.sample` to `variab
 
 By doing this, you will be able to start the application. You just need to run `npm start <path>`, passing the absolute path as a parameter. For instance:
 
-`npm start /path/to/my/images/folder`
+`$ npm start /path/to/my/images/folder`
 
 Just remember: If you have a free plan, you'll only be able to minify 500 images per month, so use it wisely.
 
