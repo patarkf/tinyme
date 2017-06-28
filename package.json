@@ -1,7 +1,7 @@
 {
   "name": "tinyme",
   "version": "1.0.0",
-  "description": "",
+  "description": "A command-line tool that uses TinyPNG API to minify images of a given directory",
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
