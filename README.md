@@ -13,8 +13,8 @@ Simple as that.
 
 To install and use the application you'll need the following:
 
-- Node.js 8 or above
-- NPM 5 or above
+- Node.js 8 or later
+- NPM 5 or later
 - An API key provided by TinyPNG, which you can get [here](https://tinypng.com/developers).
 
 ## Usage
