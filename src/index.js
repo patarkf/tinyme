@@ -7,9 +7,8 @@ const Logger = require('./helpers/logger');
 /**
  * Initializes the application.
  */
-async function initialize() {
+async function initialize(path) {
   try {
-    const path = process.argv[2];
     if (typeof path === 'undefined') {
       throw new Error('You have to define a path');
     }
@@ -22,4 +21,4 @@ async function initialize() {
   }
 }
 
-initialize();
+module.exports = initialize;
