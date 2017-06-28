@@ -7,6 +7,9 @@
     "start": "node src/index.js",
     "test": "eslint src"
   },
+  "bin": {
+    "tinyme": "bin/tinyme.js"
+  },
   "eslintConfig": {
     "extends": "eslint:recommended",
     "parserOptions": {

@@ -1,10 +1,11 @@
 /**
  * Node modules
  */
-const dotenv = require('dotenv');
 const assert = require('assert');
+const dotenv = require('dotenv');
+const currentPath = process.cwd();
 
-dotenv.config({ path: 'variables.env' });
+dotenv.config({ path: `${currentPath}/variables.env` });
 
 /**
  * Gets env variables by its name. These variables are extracted by dotenv lib.
