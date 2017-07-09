@@ -4,6 +4,7 @@
   "description": "A command-line tool that uses TinyPNG API to minify images of a given directory",
   "main": "index.js",
   "scripts": {
+    "build": "npm install -g . && npm install",
     "start": "node src/index.js",
     "test": "eslint src"
   },
@@ -15,7 +16,7 @@
     "parserOptions": {
       "ecmaVersion": 7,
       "sourceType": "module"
-    },
+     },
     "rules": {
       "no-console": 0,
       "no-unused-vars": 1
