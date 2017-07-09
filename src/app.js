@@ -2,7 +2,6 @@
  * Local modules
  */
 const Logger = require('./helpers/logger');
-const Environment = require('./helpers/env');
 const FileSystem = require('./helpers/file');
 
 /**
@@ -10,9 +9,11 @@ const FileSystem = require('./helpers/file');
  */
 const tinify = require('tinify');
 const path = require('path');
-const util = require('util');
-const readdirAsync = util.promisify(require('fs').readdir);
-const lstatAsync = util.promisify(require('fs').lstat);
+const fs = require('fs');
+const { promisify } = require('util');
+
+const readdirAsync = promisify(fs.readdir);
+const lstatAsync = promisify(fs.lstat);
 
 /**
  * Application class
@@ -26,17 +27,17 @@ const lstatAsync = util.promisify(require('fs').lstat);
  */
 class Application {
   /**
-   * Sets Tinify API key and validate it. Throws an error in case of not valid key.
+   * Sets and validates a Tinify API key. Throws an error if key is not valid.
    *
    * @static
+   * @param {string} apiKey
    *
    * @memberof Application
    */
-  static setConfig() {
-    tinify.key = Environment.getProperty('API_KEY');
-    tinify.validate((err) => {
-      if (err) throw err;
-    });
+  static async setApiKey(apiKey) {
+    tinify.key = apiKey;
+
+    await tinify.validate();
   }
 
   /**
@@ -49,8 +50,6 @@ class Application {
    * @memberof Application
    */
   static async run(dir) {
-    Application.setConfig();
-
     if (!path.isAbsolute(dir)) throw new Error('Given path is not an absolute path');
 
     Logger.info('Starting process...');
@@ -81,7 +80,7 @@ class Application {
 
       return await Promise.all(results);
     } catch (err) {
-      throw new Error(err);
+      throw new Error(err.message);
     }
   }
 
@@ -129,7 +128,7 @@ class Application {
       Logger.info(`Minified image: ${file}`);
       return true;
     } catch (err) {
-      throw new Error(err);
+      throw new Error(err.message);
     }
   }
 }
