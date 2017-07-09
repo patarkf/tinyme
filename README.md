@@ -19,7 +19,7 @@ To install and use the application you'll need the following:
 
 ## Install
 
-You can install `tinyme` as a global module and use it anywhere. To do that, you just need to run `npm run build`. 
+You can install `tinyme` as a global module and use it anywhere. To do that, you just need to run `$ npm run build`. 
 
 Now you are ready.
 
@@ -31,7 +31,9 @@ The most important thing to know about its usage is that you have to provide you
 
 After the first run providing your API key, it will be stored as an environment variable, and then you can run `tinyme` just providing the target path:
 
-`$ tinyne /path/to/my/images/folder`
+`$ tinyme /path/to/my/images/folder`
+
+To get a list of all accepted args, just run `$ tinyme --help`.
 
 Another important note about its usage is that, if you have a free plan, you'll only be able to minify 500 images per month, so use it wisely.
 
