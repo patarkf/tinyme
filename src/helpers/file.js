@@ -50,7 +50,7 @@ class FileSystem {
     try {
       await ncp(originalDir, clonedDir, { clobber: false });
     } catch (err) {
-      throw new Error('Could not clone given dir');
+      throw new Error('Could not clone given dir. Please check if it exists.');
     }
 
     return clonedDir;
