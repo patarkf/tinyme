@@ -31,7 +31,7 @@ class FileSystem {
   }
 
   /**
-   * Clones the origial dir with a "-optimized" prefix at the same level of the
+   * Clones the origial dir with a "-tinyme-optimized" prefix at the same level of the
    * original dir.
    *
    * @static
@@ -41,13 +41,13 @@ class FileSystem {
    *
    * @memberof FileSystem
    */
-  static async cloneDir(dir, prefix = 'optimized') {
+  static async cloneDir(dir, prefix = 'tinyme-optimized') {
     const originalDir = path.resolve(dir);
 
     const clonedDir = `${originalDir}-${prefix}`;
 
     try {
-      await ncp(originalDir, clonedDir);
+      await ncp(originalDir, clonedDir, { clobber: false });
     } catch (err) {
       throw new Error('Could not clone given dir');
     }
