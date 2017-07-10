@@ -36,7 +36,7 @@ class FileSystem {
    *
    * @static
    * @param {string} dir
-   * @param {string} [prefix='optimized']
+   * @param {string} [prefix='tinyme-optimized']
    * @returns {string}
    *
    * @memberof FileSystem
@@ -47,7 +47,7 @@ class FileSystem {
     const clonedDir = `${originalDir}-${prefix}`;
 
     try {
-      await ncp(originalDir, clonedDir, { clobber: false });
+      await ncp(originalDir, clonedDir);
     } catch (err) {
       throw new Error('Could not clone given dir');
     }
