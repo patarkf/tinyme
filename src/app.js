@@ -8,7 +8,6 @@ const FileSystem = require('./helpers/file');
  * Node modules
  */
 const tinify = require('tinify');
-const path = require('path');
 const fs = require('fs');
 const { promisify } = require('util');
 
@@ -50,8 +49,6 @@ class Application {
    * @memberof Application
    */
   static async run(dir) {
-    if (!path.isAbsolute(dir)) throw new Error('Given path is not an absolute path');
-
     Logger.info('Starting process...');
 
     const optimizedDir = await FileSystem.cloneDir(dir);
