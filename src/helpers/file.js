@@ -39,6 +39,7 @@ class FileSystem {
    * @param {string} [prefix='tinyme-optimized']
    * @returns {string}
    *
+   * @see {@link https://github.com/AvianFlu/ncp} for NCP module information.
    * @memberof FileSystem
    */
   static async cloneDir(dir, prefix = 'tinyme-optimized') {
@@ -47,7 +48,7 @@ class FileSystem {
     const clonedDir = `${originalDir}-${prefix}`;
 
     try {
-      await ncp(originalDir, clonedDir);
+      await ncp(originalDir, clonedDir, { clobber: false });
     } catch (err) {
       throw new Error('Could not clone given dir');
     }
