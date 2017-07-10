@@ -16,7 +16,7 @@
     "parserOptions": {
       "ecmaVersion": 7,
       "sourceType": "module"
-     },
+    },
     "rules": {
       "no-console": 0,
       "no-unused-vars": 1
