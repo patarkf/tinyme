@@ -22,7 +22,7 @@ const lstatAsync = promisify(fs.lstat);
  * by using the TinyPNG API.
  *
  * @class Application
- * @see https://github.com/tinify/tinify-nodejs
+ * @see {@link https://github.com/tinify/tinify-nodejs} for TinyPNG client information.
  * @author Patrick Ferreira <paatrickferreira@gmail.com>
  */
 class Application {
