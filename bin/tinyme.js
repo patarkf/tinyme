@@ -7,14 +7,14 @@ const { writeFileSync } = require('fs');
 config({ path: 'variables.env' });
 
 program
-  .arguments('<path> [token]')
-  .usage('<path> [token]')
-  .action((path, token) => {
-    if (typeof token !== 'undefined') {
-      writeFileSync('variables.env', `TINYME_API_KEY="${token}"`);
+  .arguments('<path> [api_key]')
+  .usage('<path> [api_key]')
+  .action((path, cliApiKey) => {
+    if (typeof cliApiKey !== 'undefined') {
+      writeFileSync('variables.env', `TINYME_API_KEY="${cliApiKey}"`);
     }
 
-    const apiKey = token || process.env.TINYME_API_KEY || undefined;
+    const apiKey = cliApiKey || process.env.TINYME_API_KEY || undefined;
 
     tinyme(path, apiKey);
   })
