@@ -9,6 +9,7 @@ const FileSystem = require('./helpers/file');
  */
 const tinify = require('tinify');
 const fs = require('fs');
+const flattenDeep = require('lodash.flattendeep');
 const { promisify } = require('util');
 
 const readdirAsync = promisify(fs.readdir);
@@ -54,10 +55,12 @@ class Application {
     const optimizedDir = await FileSystem.cloneDir(dir);
     Logger.info('Created optimized dir');
 
-    const results = await Application.readDirRecursively(optimizedDir);
-    const totalOfMinifiedFiles = results.filter(isFile => !!isFile).length;
+    const results = flattenDeep(await Application.readDirRecursively(optimizedDir));
+    const totalOfMinifiedFiles = results.filter(wasMinified => wasMinified).length;
+    const totalOfSkippedFiles = results.filter(wasMinified => !wasMinified).length;
 
-    Logger.info(`${totalOfMinifiedFiles} file(s) minified!`);
+    Logger.warn(`${totalOfSkippedFiles} skipped file(s)`);
+    Logger.info(`${totalOfMinifiedFiles} minified file(s)`);
   }
 
   /**
@@ -116,7 +119,7 @@ class Application {
   static async minifyFile(file) {
     try {
       if (!FileSystem.isImage(file)) {
-        Logger.error(`Oops! "${file}" is not a valid image.`);
+        Logger.warn(`Oops! "${file}" is not a valid image.`);
         return false;
       }
 

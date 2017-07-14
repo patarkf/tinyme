@@ -19,7 +19,7 @@ class Logger {
    */
   constructor() {
     const logger = new (winston.Logger)({
-      transports: [new (winston.transports.Console)({ level: 'debug', colorize: true })],
+      transports: [new (winston.transports.Console)({ level: 'verbose', colorize: true })],
     });
 
     return logger;
