@@ -11,15 +11,13 @@ const { writeFileSync } = require('fs');
 const Application = require('./app');
 const Logger = require('./helpers/logger');
 
-config({ path: `${globalModulesPath}/tinyme/variables.env` });
-
 /**
  * Starts the minification process of the application.
  */
 exports.minifyImages = async function (path) {
   try {
     if (typeof path === 'undefined') {
-      throw new Error('Please, you must define a path');
+      throw new Error('Please define a path');
     }
 
     await Application.setAndValidateApiKey(this.getApiKey());
@@ -53,7 +51,7 @@ exports.getCompressionCount = async function () {
 exports.setApiKey = function (cliApiKey) {
   try {
     if (typeof cliApiKey === 'undefined') {
-      throw new Error('There is no API key set, please provide it');
+      throw new Error('Please provide your API key');
     }
 
     writeFileSync(`${globalModulesPath}/tinyme/variables.env`, `TINYME_API_KEY="${cliApiKey}"`);
@@ -65,5 +63,13 @@ exports.setApiKey = function (cliApiKey) {
 /**
  * Returns the previously set API key.
  */
-exports.getApiKey = () => process.env.TINYME_API_KEY;
+exports.getApiKey = function () {
+  config({ path: `${globalModulesPath}/tinyme/variables.env` });
 
+  const apiKey = process.env.TINYME_API_KEY;
+  if (typeof apiKey === 'undefined' || !apiKey.length) {
+    throw new Error('Please provide your API key');
+  }
+
+  return apiKey;
+}
