@@ -34,7 +34,7 @@ class Application {
    *
    * @memberof Application
    */
-  static async setApiKey(apiKey) {
+  static async setAndValidateApiKey(apiKey) {
     tinify.key = apiKey;
 
     await tinify.validate();
