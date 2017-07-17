@@ -34,7 +34,7 @@ After the first running providing your API key, it will be stored as an environm
 
 `$ tinyme -m /path/to/your/images/dir`
 
-Tinyme uses the excellent [Commander.js](https://github.com/tj/commander.js/blob/master/Readme.md) module to provide you an interface which you can run different commands to accomplish different tasks.
+Tinyme uses the excellent [Commander.js](https://github.com/tj/commander.js) module to provide you an interface which you can run different commands to accomplish different tasks.
 
 You can get the full list of available commands by running `$ tinyme --help` or just `$ tinyme -h`:
 
