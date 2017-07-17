@@ -32,6 +32,22 @@ exports.minifyImages = async function (path) {
 };
 
 /**
+ * Gets and prints the total number of minified images based
+ * on the previously set API key.
+ */
+exports.getCompressionCount = async function () {
+  try {
+    await Application.setAndValidateApiKey(this.getApiKey());
+    const numberOfMinifiedImages = await Application.getCompressionCount();
+
+    Logger.info(`You have already minified ${numberOfMinifiedImages} image(s)`);
+  } catch (err) {
+    Logger.error(err.message);
+  }
+};
+
+
+/**
  * Sets and stores an API key as environment variable.
  */
 exports.setApiKey = function (cliApiKey) {

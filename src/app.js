@@ -10,7 +10,9 @@ const FileSystem = require('./helpers/file');
 const tinify = require('tinify');
 const fs = require('fs');
 const flattenDeep = require('lodash.flattendeep');
-const { promisify } = require('util');
+const {
+  promisify,
+} = require('util');
 
 const readdirAsync = promisify(fs.readdir);
 const lstatAsync = promisify(fs.lstat);
@@ -130,6 +132,19 @@ class Application {
     } catch (err) {
       throw new Error(err.message);
     }
+  }
+
+  /**
+   * Gets the number of already minified images of a specific user. It uses
+   * the previously set API key to check this information.
+   *
+   * @static
+   * @returns {string}
+   *
+   * @memberof Application
+   */
+  static async getCompressionCount() {
+    return tinify.compressionCount;
   }
 }
 
