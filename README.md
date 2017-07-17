@@ -1,3 +1,4 @@
+
 # Tinyme
 A Node.js command-line tool that uses TinyPNG to minify images based on a given directory
 
@@ -25,15 +26,33 @@ Now you are ready.
 
 ## Usage
 
-The most important thing to know about its usage is that you have to provide your API key at least once:
+The most important thing to know about `tinyme` usage is that you must provide your API key at least once:
 
-`$ tinyme /path/to/my/images your_api_key`
+`$ tinyme --api-key <api_key>`
 
-After the first run providing your API key, it will be stored as an environment variable, and then you can run `tinyme` just providing the target path:
+After the first running providing your API key, it will be stored as an environment variable named `TINYME_API_KEY`. From this moment and on, you will be able to run any `tinyme` command. For instance, to minify images of a given dir, you just have to provide its path:
 
-`$ tinyme /path/to/my/images/folder`
+`$ tinyme -m /path/to/your/images/dir`
 
-To get a list of all accepted args, just run `$ tinyme --help`.
+Tinyme uses the excellent [Commander.js](https://github.com/tj/commander.js/blob/master/Readme.md) module to provide you an interface which you can run different commands to accomplish different tasks.
+
+You can get the full list of available commands by running `$ tinyme --help` or just `$ tinyme -h`:
+
+```
+$ tinyme --help
+
+  Usage: tinyme [options]
+
+
+  Options:
+
+    -V, --version            output the version number
+    -k, --api-key <api_key>  set your API key
+    -m, --minify <path>      minify images of a given path
+    -c, --count              gets the number of already minified images so far
+    -h, --help               output usage information
+
+```
 
 Another important note about its usage is that, if you have a free plan, you'll only be able to minify 500 images per month, so use it wisely.
 
