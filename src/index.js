@@ -56,8 +56,6 @@ exports.setApiKey = function (cliApiKey) {
       throw new Error('There is no API key set, please provide it');
     }
 
-    console.log(`${globalModulesPath}/variables.env`);
-
     writeFileSync(`${globalModulesPath}/tinyme/variables.env`, `TINYME_API_KEY="${cliApiKey}"`);
   } catch (err) {
     Logger.error(err.message);
