@@ -14,7 +14,7 @@ const Logger = require('./helpers/logger');
 /**
  * Starts the minification process of the application.
  */
-exports.minifyImages = async function (path) {
+exports.minifyImages = async (path) => {
   try {
     if (typeof path === 'undefined') {
       throw new Error('Please define a path');
@@ -33,7 +33,7 @@ exports.minifyImages = async function (path) {
  * Gets and prints the total number of minified images based
  * on the previously set API key.
  */
-exports.getCompressionCount = async function () {
+exports.getCompressionCount = async () => {
   try {
     await Application.setAndValidateApiKey(this.getApiKey());
     const numberOfMinifiedImages = await Application.getCompressionCount();
@@ -48,7 +48,7 @@ exports.getCompressionCount = async function () {
 /**
  * Sets and stores an API key as environment variable.
  */
-exports.setApiKey = function (cliApiKey) {
+exports.setApiKey = (cliApiKey) => {
   try {
     if (typeof cliApiKey === 'undefined') {
       throw new Error('Please provide your API key');
@@ -63,7 +63,7 @@ exports.setApiKey = function (cliApiKey) {
 /**
  * Returns the previously set API key.
  */
-exports.getApiKey = function () {
+exports.getApiKey = () => {
   config({ path: `${globalModulesPath}/tinyme/variables.env` });
 
   const apiKey = process.env.TINYME_API_KEY;
@@ -72,4 +72,4 @@ exports.getApiKey = function () {
   }
 
   return apiKey;
-}
+};
