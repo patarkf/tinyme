@@ -61,8 +61,7 @@ class Application {
     const totalOfMinifiedFiles = results.filter(wasMinified => wasMinified).length;
     const totalOfSkippedFiles = results.filter(wasMinified => !wasMinified).length;
 
-    Logger.warn(`${totalOfSkippedFiles} skipped file(s)`);
-    Logger.info(`${totalOfMinifiedFiles} minified file(s)`);
+    Application.showProcessResults(totalOfMinifiedFiles, totalOfSkippedFiles);
   }
 
   /**
@@ -145,6 +144,22 @@ class Application {
    */
   static async getCompressionCount() {
     return tinify.compressionCount;
+  }
+
+  /**
+   * Checks and prints the process statuses.
+   *
+   * @static
+   * @param {string} totalOfMinifiedFiles
+   * @param {string} totalOfSkippedFiles
+   * @returns
+   * @memberof Application
+   */
+  static showProcessResults(totalOfMinifiedFiles, totalOfSkippedFiles) {
+    if (!totalOfMinifiedFiles.length) return Logger.warn('No images have been found. Please try a different directory');
+    if (totalOfSkippedFiles.length) Logger.warn(`${totalOfSkippedFiles} skipped file(s)`);
+
+    Logger.info(`${totalOfMinifiedFiles} minified image(s)`);
   }
 }
 
