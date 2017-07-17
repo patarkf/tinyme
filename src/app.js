@@ -159,7 +159,7 @@ class Application {
     if (!totalOfMinifiedFiles.length) return Logger.warn('No images have been found. Please try a different directory');
     if (totalOfSkippedFiles.length) Logger.warn(`${totalOfSkippedFiles} skipped file(s)`);
 
-    Logger.info(`${totalOfMinifiedFiles} minified image(s)`);
+    return Logger.info(`${totalOfMinifiedFiles} minified image(s)`);
   }
 }
 
