@@ -10,9 +10,7 @@ const FileSystem = require('./helpers/file');
 const tinify = require('tinify');
 const fs = require('fs');
 const flattenDeep = require('lodash.flattendeep');
-const {
-  promisify,
-} = require('util');
+const { promisify } = require('util');
 
 const readdirAsync = promisify(fs.readdir);
 const lstatAsync = promisify(fs.lstat);
