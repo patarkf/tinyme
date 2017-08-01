@@ -157,8 +157,8 @@ class Application {
    * @memberof Application
    */
   static showProcessResults(totalOfMinifiedFiles, totalOfSkippedFiles) {
-    if (!totalOfMinifiedFiles.length) return Logger.warn('No images have been found. Please try a different directory');
-    if (totalOfSkippedFiles.length) Logger.warn(`${totalOfSkippedFiles} skipped file(s)`);
+    if (!totalOfMinifiedFiles) return Logger.warn('No images have been found. Please try a different directory');
+    if (totalOfSkippedFiles) Logger.warn(`${totalOfSkippedFiles} skipped file(s)`);
 
     return Logger.info(`${totalOfMinifiedFiles} minified image(s)`);
   }
