@@ -3,6 +3,7 @@
  */
 const path = require('path');
 const util = require('util');
+const glob = util.promisify(require('glob'));
 const ncp = util.promisify(require('ncp').ncp);
 
 /**
@@ -54,6 +55,19 @@ class FileSystem {
     }
 
     return clonedDir;
+  }
+
+  /**
+   * Uses glob to check recursively if a given dir has images.
+   *
+   * @see {@link https://github.com/isaacs/node-glob} for Glob module information.
+   * @param {*} dir
+   */
+  static async checkIfDirHasImages(dir) {
+    const images = await glob(`${dir}**/*.+(png|jpg|jpeg)`);
+    if (!images.length) {
+      throw new Error('Given dir has no images');
+    }
   }
 }
 

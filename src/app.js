@@ -52,6 +52,9 @@ class Application {
   static async run(dir) {
     Logger.info('Starting process...');
 
+    Logger.info('Checking if given dir has images');
+    await FileSystem.checkIfDirHasImages(dir);
+
     const optimizedDir = await FileSystem.cloneDir(dir);
     Logger.info('Created optimized dir');
 
