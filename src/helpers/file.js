@@ -64,7 +64,7 @@ class FileSystem {
    * @param {*} dir
    */
   static async checkIfDirHasImages(dir) {
-    const images = await glob(`${dir}**/*.+(png|jpg|jpeg)`);
+    const images = await glob(`${dir}/**/*.+(png|jpg|jpeg)`);
     if (!images.length) {
       throw new Error('Given dir has no images');
     }
