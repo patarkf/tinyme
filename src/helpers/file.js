@@ -45,8 +45,9 @@ class FileSystem {
   /**
    * Uses glob to recursively check if a given directory has images.
    *
-   * @see {@link https://github.com/isaacs/node-glob} for Glob module information.
    * @param {string} dir
+   *
+   * @see {@link https://github.com/isaacs/node-glob} for Glob module information.
    */
   static async checkIfDirHasImages(dir) {
     const images = await glob(`${dir}/**/*.+(png|jpg|jpeg)`);
@@ -59,8 +60,9 @@ class FileSystem {
    * Uses glob to get all non-image files from a given directory
    * and deletes all of them afterward.
    *
-   * @see {@link https://github.com/isaacs/node-glob} for Glob module information.
    * @param {string} dir
+   *
+   * @see {@link https://github.com/isaacs/node-glob} for Glob module information.
    */
   static async deleteNonImageFiles(dir) {
     const files = await glob(`${dir}/**/*.!(png|jpg|jpeg)`);
@@ -70,16 +72,20 @@ class FileSystem {
   /**
     * Uses Glob to get all images from a given directory.
     *
-    * @see {@link https://github.com/isaacs/node-glob} for Glob module information.
     * @param {string} dir
+    * @returns {string}
+    *
+    * @see {@link https://github.com/isaacs/node-glob} for Glob module information.
     */
   static async getImagesFromDir(dir) {
     return glob(`${dir}/**/*.+(png|jpg|jpeg)`);
   }
 
   /**
+   * Gets the formatted size of a given file.
    *
-   * @param {*} file
+   * @param {string} file
+   * @return {string} formatted file size
    */
   static async getFileSize(file) {
     const fileStats = await fsLstat(file);
@@ -88,8 +94,10 @@ class FileSystem {
   }
 
   /**
-   * PRIVATE
+   * Converts bytes to different kind of formats based on its size.
+   *
    * @param {int} bytes
+   * @returns {string}
    */
   static bytesToSize(bytes) {
     const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
