@@ -8,6 +8,7 @@ const FileSystem = require('./helpers/file');
  * Node modules
  */
 const tinify = require('tinify');
+const { green, yellow } = require('colors');
 
 /**
  * Application class
@@ -58,7 +59,7 @@ class Application {
     const images = await FileSystem.getImagesFromDir(optimizedDir);
     const minifiedImages = await Promise.all(images.map(image => Application.minifyFile(image)));
 
-    Logger.info(`Total of minified images: ${minifiedImages.length}`);
+    Logger.info(`Total of minified images: ${green(minifiedImages.length)}`);
     Logger.info('[Finished]');
   }
 
@@ -77,7 +78,7 @@ class Application {
       await tinify.fromFile(image).toFile(image);
       const optimizedSize = await FileSystem.getFileSize(image);
 
-      Logger.info(`Minified image ${image}. From: ${oldSize} to ${optimizedSize}`);
+      Logger.info(`Minified image ${image}. From: ${yellow(oldSize)} to ${green(optimizedSize)}`);
 
       return image;
     } catch (err) {
