@@ -3,6 +3,7 @@
  */
 const path = require('path');
 const util = require('util');
+const fsUnlink = util.promisify(require('fs').unlink);
 const glob = util.promisify(require('glob'));
 const ncp = util.promisify(require('ncp').ncp);
 
@@ -41,10 +42,10 @@ class FileSystem {
   }
 
   /**
-   * Uses glob to recursively check if a given dir has images.
+   * Uses glob to recursively check if a given directory has images.
    *
    * @see {@link https://github.com/isaacs/node-glob} for Glob module information.
-   * @param {*} dir
+   * @param {string} dir
    */
   static async checkIfDirHasImages(dir) {
     const images = await glob(`${dir}/**/*.+(png|jpg|jpeg)`);
@@ -54,7 +55,19 @@ class FileSystem {
   }
 
   /**
-    * Gets all images from a given dir.
+   * Uses glob to get all non-image files from a given directory
+   * and deletes all of them afterward.
+   *
+   * @see {@link https://github.com/isaacs/node-glob} for Glob module information.
+   * @param {string} dir
+   */
+  static async deleteNonImageFiles(dir) {
+    const files = await glob(`${dir}/**/*.!(png|jpg|jpeg)`);
+    files.map(file => fsUnlink(file));
+  }
+
+  /**
+    * Uses Glob to get all images from a given directory.
     *
     * @see {@link https://github.com/isaacs/node-glob} for Glob module information.
     * @param {string} dir

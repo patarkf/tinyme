@@ -49,7 +49,12 @@ class Application {
 
     await FileSystem.checkIfDirHasImages(dir);
 
+    Logger.info('Cloning directory');
     const optimizedDir = await FileSystem.cloneDir(dir);
+
+    Logger.info('Cleaning cloned directory');
+    await FileSystem.deleteNonImageFiles(optimizedDir);
+
     const images = await FileSystem.getImagesFromDir(optimizedDir);
     const minifiedImages = await Promise.all(images.map(image => Application.minifyFile(image)));
 
