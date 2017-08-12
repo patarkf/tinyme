@@ -15,23 +15,6 @@ const ncp = util.promisify(require('ncp').ncp);
  */
 class FileSystem {
   /**
-   * Checks if a file is an image based on a list of valid extensions.
-   *
-   * @static
-   * @param {string} file
-   * @returns {boolean}
-   *
-   * @memberof FileSystem
-   */
-  static isImage(file) {
-    const ext = file.split('.').pop().toLocaleLowerCase();
-
-    const validExtensions = ['png', 'jpg', 'jpeg'];
-
-    return validExtensions.includes(ext);
-  }
-
-  /**
    * Clones the origial dir with a "-tinyme-optimized" prefix at the same level of the
    * original dir.
    *
@@ -51,14 +34,14 @@ class FileSystem {
     try {
       await ncp(originalDir, clonedDir, { clobber: false });
     } catch (err) {
-      throw new Error('Could not clone given dir. Please check if it exists.');
+      throw new Error('Could not clone directory. Please check if it\'s correct.');
     }
 
     return clonedDir;
   }
 
   /**
-   * Uses glob to check recursively if a given dir has images.
+   * Uses glob to recursively check if a given dir has images.
    *
    * @see {@link https://github.com/isaacs/node-glob} for Glob module information.
    * @param {*} dir
@@ -66,8 +49,18 @@ class FileSystem {
   static async checkIfDirHasImages(dir) {
     const images = await glob(`${dir}/**/*.+(png|jpg|jpeg)`);
     if (!images.length) {
-      throw new Error('Given dir has no images');
+      throw new Error('Directory has no images or is not correct');
     }
+  }
+
+  /**
+    * Gets all images from a given dir.
+    *
+    * @see {@link https://github.com/isaacs/node-glob} for Glob module information.
+    * @param {string} dir
+    */
+  static async getImagesFromDir(dir) {
+    return glob(`${dir}/**/*.+(png|jpg|jpeg)`);
   }
 }
 

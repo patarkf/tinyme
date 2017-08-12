@@ -5,7 +5,7 @@ const program = require('commander');
 program
   .version('v1.0.0')
   .option('-k, --api-key <api_key>', 'set your API key')
-  .option('-m, --minify <path>', 'minify images of a given path')
+  .option('-m, --minify <path>', 'minify images from a given directory')
   .option('-c, --count', 'gets the number of already minified images so far')
   .parse(process.argv);
 

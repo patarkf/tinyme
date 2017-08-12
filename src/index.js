@@ -13,6 +13,8 @@ const Logger = require('./helpers/logger');
 
 /**
  * Starts the minification process of the application.
+ *
+ * @param {string} path Directory provided by the user
  */
 exports.minifyImages = async (path) => {
   try {
@@ -22,8 +24,6 @@ exports.minifyImages = async (path) => {
 
     await Application.setAndValidateApiKey(this.getApiKey());
     await Application.run(path);
-
-    Logger.info('Finished');
   } catch (err) {
     Logger.error(err.message);
   }
@@ -47,6 +47,8 @@ exports.getCompressionCount = async () => {
 
 /**
  * Sets and stores an API key as environment variable.
+ *
+ * @param {string} cliApiKey TinyPNG API key
  */
 exports.setApiKey = (cliApiKey) => {
   try {
@@ -62,6 +64,8 @@ exports.setApiKey = (cliApiKey) => {
 
 /**
  * Returns the previously set API key.
+ *
+ * @returns {string} Returns the API key
  */
 exports.getApiKey = () => {
   config({ path: `${globalModulesPath}/tinyme/variables.env` });
