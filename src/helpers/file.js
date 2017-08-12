@@ -4,6 +4,7 @@
 const path = require('path');
 const util = require('util');
 const fsUnlink = util.promisify(require('fs').unlink);
+const fsLstat = util.promisify(require('fs').lstat);
 const glob = util.promisify(require('glob'));
 const ncp = util.promisify(require('ncp').ncp);
 
@@ -74,6 +75,30 @@ class FileSystem {
     */
   static async getImagesFromDir(dir) {
     return glob(`${dir}/**/*.+(png|jpg|jpeg)`);
+  }
+
+  /**
+   *
+   * @param {*} file
+   */
+  static async getFileSize(file) {
+    const fileStats = await fsLstat(file);
+
+    return this.bytesToSize(fileStats.size);
+  }
+
+  /**
+   * PRIVATE
+   * @param {int} bytes
+   */
+  static bytesToSize(bytes) {
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+    if (bytes === 0) return 'n/a';
+
+    const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)), 10);
+    if (i === 0) return `${bytes} ${sizes[i]})`;
+
+    return `${(bytes / (1024 ** i)).toFixed(1)} ${sizes[i]}`;
   }
 }
 

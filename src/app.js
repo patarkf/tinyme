@@ -73,9 +73,11 @@ class Application {
    */
   static async minifyFile(image) {
     try {
+      const oldSize = await FileSystem.getFileSize(image);
       await tinify.fromFile(image).toFile(image);
+      const optimizedSize = await FileSystem.getFileSize(image);
 
-      Logger.info(`Minified image ${image}`);
+      Logger.info(`Minified image ${image}. From: ${oldSize} to ${optimizedSize}`);
 
       return image;
     } catch (err) {
