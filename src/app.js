@@ -1,103 +1,80 @@
 /**
- * Local modules
- */
-const Logger = require('./helpers/logger');
-const FileSystem = require('./helpers/file');
-
-/**
- * Node modules
- */
-const tinify = require('tinify');
-const { green, yellow } = require('colors');
-
-/**
- * Application class
- *
- * Receives a given dir (which should have images) and minify all of them
- * by using the TinyPNG API.
- *
- * @class Application
+ * @name Application
+ * @description Minify all images of a given dir by using the TinyPNG API.
  * @see {@link https://github.com/tinify/tinify-nodejs} for TinyPNG client information.
  * @author Patrick Ferreira <paatrickferreira@gmail.com>
  */
-class Application {
-  /**
-   * Sets and validates a Tinify API key. Throws an error if key is not valid.
-   *
-   * @static
-   * @param {string} apiKey
-   *
-   * @memberof Application
-   */
-  static async setAndValidateApiKey(apiKey) {
-    tinify.key = apiKey;
 
-    await tinify.validate();
+const { logger } = require('./helpers/logger');
+const fileSystemHelper = require('./helpers/file');
+const { green, yellow } = require('colors');
+const tinify = require('tinify');
+
+/**
+ * Gets the number of already minified images of based on the set API key.
+ *
+ * @returns {string} Total of compressed images.
+ */
+const getCompressionCount = async () => tinify.compressionCount;
+
+/**
+ * Minifies a given image, logging the result afterwrads.
+ *
+ * @param {string} file
+ * @returns {boolean}
+ */
+const minifyFile = async (image) => {
+  try {
+    const oldSize = await fileSystemHelper.getFileSize(image);
+    await tinify.fromFile(image).toFile(image);
+    const optimizedSize = await fileSystemHelper.getFileSize(image);
+
+    logger.info(`Minified image ${image}. From: ${yellow(oldSize)} to ${green(optimizedSize)}`);
+
+    return image;
+  } catch (err) {
+    throw new Error(`${err.message}: ${image}`);
   }
+};
 
-  /**
-   * Main method of the class. Validates if a given dir has images,clones it,
-   * get all its images and finally minify all of them, putting the results
-   * in the cloned dir. This way the original one stays intact.
-   *
-   * @static
-   * @param {string} dir
-   *
-   * @memberof Application
-   */
-  static async run(dir) {
-    Logger.info('[Started]');
+/**
+ * Main function. Validates if a given dir has images, clones it,
+ * gets all its images and finally minify all of them, putting the results
+ * in the cloned dir. That way the original dir stays intact.
+ *
+ * @param {string} dir
+ */
+const run = async (dir) => {
+  logger.info('[Started]');
 
-    await FileSystem.checkIfDirHasImages(dir);
+  await fileSystemHelper.checkIfDirHasImages(dir);
 
-    Logger.info('Cloning directory');
-    const optimizedDir = await FileSystem.cloneDir(dir);
+  logger.info('Cloning directory');
+  const optimizedDir = await fileSystemHelper.cloneDir(dir);
 
-    Logger.info('Cleaning cloned directory');
-    await FileSystem.deleteNonImageFiles(optimizedDir);
+  logger.info('Cleaning cloned directory');
+  await fileSystemHelper.deleteNonImageFiles(optimizedDir);
 
-    const images = await FileSystem.getImagesFromDir(optimizedDir);
-    const minifiedImages = await Promise.all(images.map(image => Application.minifyFile(image)));
+  const images = await fileSystemHelper.getImagesFromDir(optimizedDir);
+  const minifiedImages = await Promise.all(images.map(minifyFile));
 
-    Logger.info(`Total of minified images: ${green(minifiedImages.length)}`);
-    Logger.info('[Finished]');
-  }
+  logger.info(`Total of minified images: ${green(minifiedImages.length)}`);
+  logger.info('[Finished]');
+};
 
-  /**
-   * Minifies a given image.
-   *
-   * @static
-   * @param {string} file
-   * @returns {boolean}
-   *
-   * @memberof Application
-   */
-  static async minifyFile(image) {
-    try {
-      const oldSize = await FileSystem.getFileSize(image);
-      await tinify.fromFile(image).toFile(image);
-      const optimizedSize = await FileSystem.getFileSize(image);
+/**
+ * Sets and validates a Tinify API key. Throws an error if key is not valid.
+ *
+ * @param {string} apiKey
+ */
+const setAndValidateApiKey = async (apiKey) => {
+  tinify.key = apiKey;
 
-      Logger.info(`Minified image ${image}. From: ${yellow(oldSize)} to ${green(optimizedSize)}`);
+  await tinify.validate();
+};
 
-      return image;
-    } catch (err) {
-      throw new Error(`${err.message}: ${image}`);
-    }
-  }
-
-  /**
-   * Gets the number of already minified images of a specific user. It uses
-   * the previously set API key to check this information.
-   *
-   * @static
-   * @returns {string}
-   *
-   * @memberof Application
-   */
-  static async getCompressionCount() {
-    return tinify.compressionCount;
-  }
-}
-
-module.exports = Application;
+module.exports = {
+  getCompressionCount,
+  run,
+  setAndValidateApiKey,
+};
