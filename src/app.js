@@ -6,7 +6,7 @@
  */
 
 const { logger } = require('./helpers/logger');
-const fileSystemHelper = require('./helpers/file');
+const fileSystem = require('./helpers/file');
 const { green, yellow } = require('colors');
 const tinify = require('tinify');
 
@@ -25,9 +25,9 @@ const getCompressionCount = async () => tinify.compressionCount;
  */
 const minifyFile = async (image) => {
   try {
-    const oldSize = await fileSystemHelper.getFileSize(image);
+    const oldSize = await fileSystem.getFileSize(image);
     await tinify.fromFile(image).toFile(image);
-    const optimizedSize = await fileSystemHelper.getFileSize(image);
+    const optimizedSize = await fileSystem.getFileSize(image);
 
     logger.info(`Minified image ${image}. From: ${yellow(oldSize)} to ${green(optimizedSize)}`);
 
@@ -47,15 +47,15 @@ const minifyFile = async (image) => {
 const run = async (dir) => {
   logger.info('[Started]');
 
-  await fileSystemHelper.checkIfDirHasImages(dir);
+  await fileSystem.checkIfDirHasImages(dir);
 
   logger.info('Cloning directory');
-  const optimizedDir = await fileSystemHelper.cloneDir(dir);
+  const optimizedDir = await fileSystem.cloneDir(dir);
 
   logger.info('Cleaning cloned directory');
-  await fileSystemHelper.deleteNonImageFiles(optimizedDir);
+  await fileSystem.deleteNonImageFiles(optimizedDir);
 
-  const images = await fileSystemHelper.getImagesFromDir(optimizedDir);
+  const images = await fileSystem.getImagesFromDir(optimizedDir);
   const minifiedImages = await Promise.all(images.map(minifyFile));
 
   logger.info(`Total of minified images: ${green(minifiedImages.length)}`);
