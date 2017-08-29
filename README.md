@@ -2,6 +2,8 @@
 # Tinyme
 A Node.js command-line tool that uses TinyPNG to minify images based on a given directory
 
+[![Coverage Status](https://coveralls.io/repos/github/patarkf/tinyme/badge.svg?branch=master)](https://coveralls.io/github/patarkf/tinyme?branch=master)
+
 ## Introduction
 
 The purpose of this command-line application is to help developers that need to minify images but don't want to do it manually on the browser, etc., improving the time of the all process. I built the application at the top of the [TinyPNG API](https://tinypng.com), which is a popular service used to minify images. On its free plan, the API provides a limit of images to its users, which is an amount of 500 monthly images to minify.
