@@ -6,7 +6,8 @@
   "scripts": {
     "build": "npm install && npm link",
     "start": "node src/index.js",
-    "test": "eslint src"
+    "test": "./node_modules/.bin/tape test/**/*.js",
+    "linter": "./node_modules/.bin/eslint src/ test/ bin/ --fix"
   },
   "bin": {
     "tinyme": "bin/tinyme.js"
@@ -37,7 +38,7 @@
     "winston": "^2.3.1"
   },
   "devDependencies": {
-    "eslint": "^3.1.1",
+    "eslint": "^4.5.0",
     "eslint-config-airbnb-base": "^11.3.2",
     "eslint-plugin-import": "^2.7.0"
   }
