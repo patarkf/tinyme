@@ -1,6 +1,6 @@
 const test = require('tape');
 const api = require('../../src/helpers/api');
-const fs = require('fs');
+const { readFileSync } = require('fs');
 const globalModulesPath = require('global-modules');
 const { config } = require('dotenv');
 
@@ -13,7 +13,7 @@ test('is API key being correctly set?', (assert) => {
   const testEnvApiKey = `${testEnvVarName}="${testApiKey}"`;
 
   api.save(testApiKey, testPath, testEnvFile, testEnvVarName);
-  const settedEnvApiKey = fs.readFileSync(`${testPath}/${testEnvFile}`).toString();
+  const settedEnvApiKey = readFileSync(`${testPath}/${testEnvFile}`).toString();
 
   assert.equal(testEnvApiKey, settedEnvApiKey, 'API has been set correctly');
   assert.end();
