@@ -1,7 +1,7 @@
 
 # Tinyme
 
-[![Coverage Status](https://coveralls.io/repos/github/patarkf/tinyme/badge.svg?branch=master)](https://coveralls.io/github/patarkf/tinyme?branch=master) [![Build Status](https://travis-ci.org/patarkf/tinyme.svg?branch=master)](https://travis-ci.org/patarkf/tinyme.svg?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/patarkf/tinyme/badge.svg)](https://coveralls.io/github/patarkf/tinyme) [![Build Status](https://travis-ci.org/patarkf/tinyme.svg?branch=master)](https://travis-ci.org/patarkf/tinyme.svg?branch=master)
 
 A Node.js command-line tool that uses TinyPNG to minify images based on a given directory
 
