@@ -53,7 +53,8 @@ const run = async (dir) => {
   const optimizedDir = await fileSystem.cloneDir(dir);
 
   logger.info('Cleaning cloned directory');
-  await fileSystem.deleteNonImageFiles(optimizedDir);
+  const nonImageFiles = await fileSystem.getNonImageFilesFromDir(optimizedDir);
+  await fileSystem.deleteNonImageFiles(nonImageFiles);
 
   const images = await fileSystem.getImagesFromDir(optimizedDir);
   const minifiedImages = await Promise.all(images.map(minifyFile));

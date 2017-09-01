@@ -65,17 +65,31 @@ const checkIfDirHasImages = async (dir) => {
 };
 
 /**
- * Uses glob to get all non-image files from a given directory
- * and deletes all of them afterward.
+ * Deletes all of them afterward.
+ *
+ * @param {array} files
+ */
+const deleteNonImageFiles = async files => files.map(file => fsUnlink(file));
+
+/**
+ * Gets all non-image files from a given dir.
  *
  * @param {string} dir
+ * @return {array}
  *
  * @see {@link https://github.com/isaacs/node-glob} for Glob module information.
  */
-const deleteNonImageFiles = async (dir) => {
-  const files = await glob(`${dir}/**/*.!(png|jpg|jpeg)`);
-  files.map(file => fsUnlink(file));
-};
+const getNonImageFilesFromDir = async dir => glob(`${dir}/**/*.!(png|jpg|jpeg)`);
+
+/**
+ * Uses Glob to get all images from a given directory.
+ *
+ * @param {string} dir
+ * @returns {array}
+ *
+ * @see {@link https://github.com/isaacs/node-glob} for Glob module information.
+ */
+const getImagesFromDir = async dir => glob(`${dir}/**/*.+(png|jpg|jpeg)`);
 
 /**
  * Gets the formatted size of a given file.
@@ -89,21 +103,12 @@ const getFileSize = async (file) => {
   return bytesToSize(fileStats.size);
 };
 
-/**
- * Uses Glob to get all images from a given directory.
- *
- * @param {string} dir
- * @returns {string}
- *
- * @see {@link https://github.com/isaacs/node-glob} for Glob module information.
- */
-const getImagesFromDir = async dir => glob(`${dir}/**/*.+(png|jpg|jpeg)`);
-
 module.exports = {
   bytesToSize,
   cloneDir,
   checkIfDirHasImages,
   deleteNonImageFiles,
+  getNonImageFilesFromDir,
   getFileSize,
   getImagesFromDir,
 };
