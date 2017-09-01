@@ -48,7 +48,6 @@ test('is given dir being correctly cloned?', async (assert) => {
 
 test('are non-image files being correctly returned?', async (assert) => {
   fs.mkdirSync(testDir);
-
   const testTextFiles = getTestTextFiles();
   const testImages = getTestImages();
   createFilesOnDir(testDir, testTextFiles.concat(testImages));
@@ -78,7 +77,6 @@ test('are images being correctly returned?', async (assert) => {
 
 test('are files being correctly deleted?', async (assert) => {
   fs.mkdirSync(testDir);
-
   const testTextFiles = getTestTextFiles();
   const testCreatedFiles = createFilesOnDir(testDir, testTextFiles);
 
@@ -89,5 +87,18 @@ test('are files being correctly deleted?', async (assert) => {
   deleteDir(testDir);
 
   assert.pass('Files have been correctly deleted');
+  assert.end();
+});
+
+test('are dir images being correctly checked?', async (assert) => {
+  fs.mkdirSync(testDir);
+  const testImages = getTestImages();
+  const testCreatedFiles = createFilesOnDir(testDir, testImages);
+
+  const hasImages = await fileSystem.checkIfDirHasImages(testDir);
+  if (!hasImages) assert.fail('Function failed to idenfity if dir has images or not');
+  deleteDir(testDir);
+
+  assert.pass('Images have been correctly found');
   assert.end();
 });

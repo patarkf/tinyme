@@ -62,6 +62,8 @@ const checkIfDirHasImages = async (dir) => {
   if (!images.length) {
     throw new Error('Directory has no images or is not correct');
   }
+
+  return true;
 };
 
 /**
